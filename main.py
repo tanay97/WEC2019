@@ -1,6 +1,6 @@
 import math
 
-def print_first_round(valid_teams):
+def print_first_round(valid_teams, matches):
     n = len(valid_teams)
     k = int(math.log2(n))
     num_byes = 0 if n%2 == 0 else 1
@@ -8,7 +8,7 @@ def print_first_round(valid_teams):
 
     byes = valid_teams[0:num_byes]
     players = valid_teams[num_byes:]
-    matches = {}
+
 
     for i in range(int(len(players) / 2)):
         matches[match_index] = [players[i], players[len(players) - i - 1]]
@@ -56,7 +56,12 @@ while True :
     else :
         teams.append(x)
 
-# print_first_round(teams)
-single_elimination(teams)
+matches = {}
+
+print_first_round(teams, matches)
+print(matches)
+print("When a match is done enter result as # winner_name")
+
+# single_elimination(teams)
 
 
