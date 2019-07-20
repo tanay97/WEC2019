@@ -39,8 +39,6 @@ def single_elimination(teams):
             #print("Match " + str(match_index) + " : " + players[i] + " Vs. " + players[len(players) -i -1])
             match_index = match_index + 1
 
-        for bye in byes:
-            print(bye + " gets a bye")
         valid_teams = byes
         for match in matches.keys():
             valid_teams.append(match)
