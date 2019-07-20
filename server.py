@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from python.singleElim import *
+from python.roundRobin import *
 
 app = Flask(__name__, static_folder="build/static", template_folder="build")
 
@@ -10,7 +11,7 @@ def main():
     teams = request.args.get('teamList')
     return jsonify(single_elimination(teams.split(',')))
 
-@app.route('/getRoundRobin')
+@app.route('/getRoundRobinMatches')
 def robin():
     teams = request.args.get('teamList')
     return jsonify(round_robin(teams.split(',')))
