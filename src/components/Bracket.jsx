@@ -76,16 +76,16 @@ class Bracket extends React.Component {
 		this.setState({ matches: updatedMatchesBracket })
 	}
 
-  handleScoreChange(e, i) {
-    const m = this.state.matches[i];
-    m[e.target.id] = e.target.value
-    const updatedMatches = [
-      ...this.state.matches.slice(0, i),
-      m,
-      ...this.state.matches.slice(i+1)
-    ];
-    this.setState({ matches: updatedMatches })
-  }
+	handleScoreChange(e, i) {
+		const m = this.state.matches[i];
+		m[e.target.id] = e.target.value
+		const updatedMatches = [
+			...this.state.matches.slice(0, i),
+			m,
+			...this.state.matches.slice(i+1)
+		];
+		this.setState({ matches: updatedMatches })
+	}
 
 	selectWinner(m, i) {
 		if (m.home !== parseInt(m.home, 10) && m.away !== parseInt(m.away, 10)) {
@@ -133,9 +133,17 @@ class Bracket extends React.Component {
 		return(
 			<div>
 				{this.state.matches.map((m, i) => {
+					let home = '-'
+					let away = '-'
+					if (m.home !== parseInt(m.home, 10)) {
+						home = m.home
+					}
+					if (m.away !== parseInt(m.away, 10)) {
+						away = m.away
+					}
 					return(
 						<div key={i}>
-							<p>{'Round ' + m.round + ': ' + m.home + ' vs ' + m.away}</p>
+							<p>{'Round ' + m.round + ': ' + home + ' vs ' + away}</p>
 							{this.selectWinner(m, i)}
 							<br></br>
 						</div>

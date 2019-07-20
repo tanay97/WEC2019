@@ -146,9 +146,17 @@ class Bracket extends React.Component {
 		return(
 			<div>
 				{this.state.matches.map((m, i) => {
+					let home = '-'
+					let away = '-'
+					if (m.home !== parseInt(m.home, 10)) {
+						home = m.home
+					}
+					if (m.away !== parseInt(m.away, 10)) {
+						away = m.away
+					}
 					return(
 						<div key={i}>
-							<p>{'Round ' + m.round + ': ' + m.home + ' vs ' + m.away}</p>
+							<p>{'Round ' + m.round + ': ' + home + ' vs ' + away}</p>
 							{this.selectWinner(m, i)}
 							<br></br>
 						</div>
