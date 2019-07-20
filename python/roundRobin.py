@@ -1,8 +1,7 @@
 import math
-teams = ["A", "B", "C", "D", "E"]
 
-def get_matches():
-	matches = {}
+def round_robin(teams):
+	matches = []
 	match_count = 1
 	for i in range(len(teams)):
 		for j in range(len(teams)):
@@ -11,16 +10,9 @@ def get_matches():
 				match["home"] = teams[i]
 				match["away"] = teams[j]
 				match["winner"] = ""
-				matches[str(match_count)] = match
+				matches.append(match)
 				match_count += 1
+	print(matches)
 	return matches
 	
-
-if __name__ == '__main__':
-
-	print ("Round Robin Mode")
-
-	current_match = 0
-	matches = get_matches()
-	print (matches)
 

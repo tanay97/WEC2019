@@ -10,22 +10,32 @@ class App extends React.Component {
 
   state = {
     submitted: false,
+    teamList: '',
+    type: 'Single Elimination',
   }
 
   getBracket() {
     this.setState({ submitted: true })
   }
 
+  updateTeamList(e) {
+    this.setState({ teamList: e.target.value })
+  }
+
+  updateType(e) {
+    this.setState({ type: e.target.value })
+  }
+
   main() {
     if (this.state.submitted) {
       return (
-        <Bracket></Bracket>
+        <Bracket teamList={this.state.teamList} type={this.state.type}></Bracket>
       )
     } else {
       return (
         <div>
           <p>Generate Your Tournament!</p>
-          <Generator></Generator>
+          <Generator teamList={this.state.teamList} handleTypeChange={(e) => this.updateType(e)} handleTeamChange={(e) => this.updateTeamList(e)}></Generator>
           <br></br>
           <Button variant="light" onClick={() => this.getBracket()}>Submit</Button>
         </div>
