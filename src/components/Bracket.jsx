@@ -23,9 +23,20 @@ class Bracket extends React.Component {
 
 	updateWinner(e, i) {
 		// Update match winner
-		const winner = e.target.value
-    	let matchWin = this.state.matches[i];
-    	matchWin.winner = winner
+		
+		let matchWin = this.state.matches[i];
+		if (!matchWin) {
+			return
+		}
+		const homeScore = parseInt(matchWin.homeScore, 10)
+		const awayScore = parseInt(matchWin.awayScore, 10)
+		let winner = ''
+		if (homeScore > awayScore) {
+			winner = matchWin.home
+		} else {
+			winner = matchWin.away
+		}
+		matchWin.winner = winner
 		const updatedMatches = [
 			...this.state.matches.slice(0, i),
 			matchWin,
@@ -55,38 +66,47 @@ class Bracket extends React.Component {
 		this.setState({ matches: updatedMatchesBracket })
 	}
 
-	handleChange(e) {
-		this.setState({ [e.target.id]: e.target.value });
-	}
+  handleScoreChange(e, i) {
+    const m = this.state.matches[i];
+    m[e.target.id] = e.target.value
+    const updatedMatches = [
+      ...this.state.matches.slice(0, i),
+      m,
+      ...this.state.matches.slice(i+1)
+    ];
+    this.setState({ matches: updatedMatches })
+  }
 
 	selectWinner(m, i) {
 		if (m.home !== parseInt(m.home, 10) && m.away !== parseInt(m.away, 10)) {
 			return (
-				// <div>
-				// 	<InputGroup className="mb-1">
-				// 		<InputGroup.Prepend>
-				// 			<InputGroup.Text>{m.home}</InputGroup.Text>
-				// 		</InputGroup.Prepend>
-				// 		<FormControl className='score'
-				// 			placeholder={m.home + '\'s score e.g. 50'}
-				// 		/>
-				// 		<InputGroup.Prepend>
-				// 			<InputGroup.Text>{m.away}</InputGroup.Text>
-				// 		</InputGroup.Prepend>
-				// 		<FormControl
-				// 			placeholder={m.away + '\'s score e.g. 50'}
-				// 		/>
-				// 	</InputGroup>
-				// 	<Button variant="light" onClick={this.updateWinner()}>Submit Score</Button>
-				// </div>
-				
 				<div>
-					<select class="form-control" id="type" onChange={(e) => this.updateWinner(e, i)}>
-						<option>Select Winner</option>
-						<option>{m.home}</option>
-						<option>{m.away}</option>
-					</select>
+					<InputGroup className="mb-1">
+						<InputGroup.Prepend>
+							<InputGroup.Text>{m.home}</InputGroup.Text>
+						</InputGroup.Prepend>
+						<FormControl className='score'
+							placeholder={m.home + '\'s score e.g. 50'}
+							id='homeScore' onChange={e => this.handleScoreChange(e, i)}
+						/>
+						<InputGroup.Prepend>
+							<InputGroup.Text>{m.away}</InputGroup.Text>
+						</InputGroup.Prepend>
+						<FormControl
+							placeholder={m.away + '\'s score e.g. 50'}
+							id='awayScore' onChange={e => this.handleScoreChange(e, i)}
+						/>
+					</InputGroup>
+					<Button variant="light" onClick={e => this.updateWinner(e, i)}>Submit Score</Button>
 				</div>
+				
+				// <div>
+				// 	<select class="form-control" id="type" onChange={(e) => this.updateWinner(e, i)}>
+				// 		<option>Select Winner</option>
+				// 		<option>{m.home}</option>
+				// 		<option>{m.away}</option>
+				// 	</select>
+				// </div>
 			)
 		}
 	}
