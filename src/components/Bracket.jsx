@@ -14,8 +14,19 @@ class Bracket extends React.Component {
 	}
 
 	componentDidMount() {
+		let type = ''
+		switch (this.props.type) {
+			case 'Single Elimination':
+				type = 'getSingleElimMatches'
+				break
+			case 'Round Robin':
+				type = 'getRoundRobinMatches'
+				break
+			default:
+				return
+		}
 		const teamList = this.props.teamList.split('\n').join(',')
-		fetch("http://127.0.0.1:5000/getMatches?teamList=" + teamList)
+		fetch('http://127.0.0.1:5000/' + type + '?teamList=' + teamList)
 			.then(response => response.json())
 			.then((data) => {
 				this.setState({ matches : data });
