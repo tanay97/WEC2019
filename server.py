@@ -3,23 +3,7 @@ from python.singleElim import *
 
 app = Flask(__name__, static_folder="build/static", template_folder="build")
 
-teams = [
-			{
-				'winner': '',
-				'home': 'A',
-				'away': 'B',
-			},
-			{
-				'winner': '',
-				'home': 'C',
-				'away': 'D',
-			},
-			{
-				'winner': '',
-				'home': 0,
-				'away': 1,
-			}
-		]
+teams = ['penis', 'penis1', 'penis3', 'penis4']
 
 @app.route('/getMatches')
 def main():

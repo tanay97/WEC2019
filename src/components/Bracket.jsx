@@ -17,7 +17,6 @@ class Bracket extends React.Component {
 		fetch("http://127.0.0.1:5000/getMatches")
 			.then(response => response.json())
 			.then((data) => {
-				console.log(data);
 				this.setState({ matches : data });
 			})
 	  }
@@ -93,7 +92,7 @@ class Bracket extends React.Component {
 	}
 
 	presentWinner() {
-		if (this.state.matches[this.state.matches.length-1].winner !== '') {
+		if (this.state.matches.length > 0 && this.state.matches[this.state.matches.length-1].winner !== '') {
 			return (
 				<h2>{'Congratulations the winner is ' + this.state.matches[this.state.matches.length-1].winner}</h2>
 			)
