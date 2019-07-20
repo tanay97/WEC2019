@@ -35,7 +35,7 @@ def single_elimination(teams):
 
         for i in range(int(len(players)/2)):
             matches[match_index] = [ players[i], players[len(players) -i -1]]
-            out_match.append({"home" :  players[i],  "away" : players[len(players) -i -1], "round": round})
+            out_match.append({"home" :  players[i],  "away" : players[len(players) -i -1], "round": round, "winner": ""})
             #print("Match " + str(match_index) + " : " + players[i] + " Vs. " + players[len(players) -i -1])
             match_index = match_index + 1
 

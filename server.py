@@ -1,10 +1,13 @@
-from flask import Flask, render_template
+from flask import Flask, jsonify
+from python.singleElim import *
 
 app = Flask(__name__, static_folder="build/static", template_folder="build")
 
-@app.route('/')
+teams = ['penis', 'penis1', 'penis3', 'penis4']
+
+@app.route('/getMatches')
 def main():
-    return render_template('index.html')
+    return jsonify(single_elimination(teams))
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=3000)
+    app.run(host='localhost', port=5000)
