@@ -29,7 +29,7 @@ class App extends React.Component {
   main() {
     if (this.state.submitted) {
       return (
-        <Bracket teamList={this.state.teamList}></Bracket>
+        <Bracket teamList={this.state.teamList} type={this.state.type}></Bracket>
       )
     } else {
       return (
