@@ -26,8 +26,8 @@ def double_elimination(teams):
         matches.append(k)
     for k in single_elimination(losers, len(matches) , 2):
         matches.append(k)
-    print(matches)
 
+    return matches
 
 
 
