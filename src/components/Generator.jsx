@@ -24,7 +24,10 @@ class Generator extends React.Component {
 					<option>Round Robin</option>
 				</select>
 				<br></br>
-				<textarea class="form-control" id="player-list" placeholder={playerplaceholder} rows="5"></textarea>
+				<textarea class="form-control" id="player-list" 
+					placeholder={playerplaceholder} rows="5" onChange={e => this.props.handleChange(e)}>
+					{this.props.teamList}
+				</textarea>
 			</div>
 		)
 	}
