@@ -1,4 +1,4 @@
-from singleElim import *
+from python.singleElim import *
 
 
 def double_elimination(teams):
