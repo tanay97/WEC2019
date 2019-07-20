@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormControl, InputGroup } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
 
 const playerplaceholder = 'List team line by line, based on seed order: \nTeam1 \nTeam2'
 
