@@ -19,7 +19,7 @@ def robin():
 
 
 @app.route('/getDoubleElimMatches')
-def robin():
+def double():
     teams = request.args.get('teamList')
     return jsonify(double_elimination(teams.split(',')))
 

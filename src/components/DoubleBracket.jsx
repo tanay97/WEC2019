@@ -7,44 +7,35 @@ class Bracket extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			matches: []
+            matches: []
 		}
 	}
 
 	componentDidMount() {
-		let type = ''
-		switch (this.props.type) {
-			case 'Single Elimination':
-				type = 'getSingleElimMatches'
-				break
-			case 'Round Robin':
-				type = 'getRoundRobinMatches'
-				break
-			default:
-				return
-		}
 		const teamList = this.props.teamList.split('\n').join(',')
-		fetch('http://127.0.0.1:5000/' + type + '?teamList=' + teamList)
+		fetch('http://127.0.0.1:5000/getDoubleElimMatches?teamList=' + teamList)
 			.then(response => response.json())
 			.then((data) => {
-				this.setState({ matches : data });
+                this.setState({ matches : data });
 			})
 	  }
 
 	updateWinner(e, i) {
 		// Update match winner
-		
 		let matchWin = this.state.matches[i];
 		if (!matchWin) {
 			return
 		}
 		const homeScore = parseInt(matchWin.homeScore, 10)
 		const awayScore = parseInt(matchWin.awayScore, 10)
-		let winner = ''
+        let winner = ''
+        let loser = ''
 		if (homeScore > awayScore) {
-			winner = matchWin.home
+            winner = matchWin.home
+            loser = matchWin.away
 		} else {
-			winner = matchWin.away
+            winner = matchWin.away
+            loser = matchWin.home
 		}
 		matchWin.winner = winner
 		const updatedMatches = [
@@ -56,24 +47,54 @@ class Bracket extends React.Component {
 		this.setState({ matches: updatedMatches })
 			
 		// Update bracket
-		const j = this.state.matches.findIndex(m => m.home === i || m.away === i)
-		if (j === -1) {
+        const j = this.state.matches.findIndex(m => m.home === i || m.away === i || m.away === 'loser_' + i)
+        if (j !== -1) {
+			let matchBracket = this.state.matches[j]
+            if (matchBracket.home === i) {
+                matchBracket.home = matchWin.winner
+            } else if (matchBracket.away === i) {
+                matchBracket.away = matchWin.winner
+            }
+            const updatedMatchesBracket = [
+                ...this.state.matches.slice(0, j),
+                matchBracket,
+                ...this.state.matches.slice(j+1)
+            ];
+            this.setState({ matches: updatedMatchesBracket })
+        }
+
+        const k = this.state.matches.findIndex(m => m.home === 'winner_' + i || m.away === 'winner_' + i)
+        const l = this.state.matches.findIndex(m => m.home === 'loser_' + i || m.away === 'loser_' + i)
+		if (k === -1 || l === -1) {
 			return
 		}
+        let matchWinner = this.state.matches[k]
+        let matchLoser = this.state.matches[l]
 
-		let matchBracket = this.state.matches[j]
-		if (matchBracket.home === i) {
-			matchBracket.home = matchWin.winner
-		} else {
-			matchBracket.away = matchWin.winner
-		}
+        if (matchWinner.home === 'winner_' + i) {
+            matchWinner.home = winner
+        } else if (matchWinner.away === 'winner_' + i) {
+            matchWinner.away = winner
+        }
+        if (matchLoser.home === 'loser_' + i) {
+            matchLoser.home = loser
+        } else if (matchLoser.away === 'loser_' + i) {
+            matchLoser.away = loser
+        }
 		
-		const updatedMatchesBracket = [
-			...this.state.matches.slice(0, j),
-			matchBracket,
-			...this.state.matches.slice(j+1)
-		];
-		this.setState({ matches: updatedMatchesBracket })
+		const updatedWinnersBracket = [
+			...this.state.matches.slice(0, k),
+			matchWinner,
+			...this.state.matches.slice(k+1)
+        ];
+        this.setState({ matches: updatedWinnersBracket })
+        
+        const updatedLosersBracket = [
+			...this.state.matches.slice(0, l),
+			matchLoser,
+			...this.state.matches.slice(l+1)
+        ];
+		this.setState({ matches: updatedLosersBracket })
 	}
 
   handleScoreChange(e, i) {
@@ -109,14 +130,6 @@ class Bracket extends React.Component {
 					</InputGroup>
 					<Button variant="light" onClick={e => this.updateWinner(e, i)}>Submit Score</Button>
 				</div>
-				
-				// <div>
-				// 	<select class="form-control" id="type" onChange={(e) => this.updateWinner(e, i)}>
-				// 		<option>Select Winner</option>
-				// 		<option>{m.home}</option>
-				// 		<option>{m.away}</option>
-				// 	</select>
-				// </div>
 			)
 		}
 	}

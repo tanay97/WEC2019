@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 
 import Generator from './components/Generator'
 import Bracket from './components/Bracket'
+import DoubleBracket from './components/DoubleBracket'
 
 class App extends React.Component {
 
@@ -27,7 +28,11 @@ class App extends React.Component {
   }
 
   main() {
-    if (this.state.submitted) {
+    if (this.state.submitted && this.state.type === 'Double Elimination') {
+      return (
+        <DoubleBracket teamList={this.state.teamList} type={this.state.type}></DoubleBracket>
+      )
+    } else if (this.state.submitted) {
       return (
         <Bracket teamList={this.state.teamList} type={this.state.type}></Bracket>
       )
