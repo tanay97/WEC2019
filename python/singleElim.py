@@ -22,7 +22,7 @@ def single_elimination(teams):
     out_match = []
 
     valid_teams = teams
-    match_index = 1
+    match_index = 0
     round = 1
     while (len(valid_teams) > 1):
         n = len(valid_teams)
@@ -39,8 +39,6 @@ def single_elimination(teams):
             #print("Match " + str(match_index) + " : " + players[i] + " Vs. " + players[len(players) -i -1])
             match_index = match_index + 1
 
-        for bye in byes:
-            print(bye + " gets a bye")
         valid_teams = byes
         for match in matches.keys():
             valid_teams.append(match)
@@ -48,19 +46,20 @@ def single_elimination(teams):
     print(out_match)
     return out_match
 
-def get_rankings(matches = {}):
-    rounds = 0
-    matches = 0
-    ranks = []
-    for match in matches.keys():
-        rounds = max(rounds, matches[match]["round"])
-        matches  = max(matches, match)
-
-    ranks.append()
-
-
+# def get_rankings(matches = {}):
+#     rounds = 0
+#     matches = 0
+#     ranks = []
+#     for match in matches.keys():
+#         rounds = max(rounds, matches[match]["round"])
+#         matches  = max(matches, match)
+#
+#     ranks.append()
 
 
+
+
+single_elimination(["penis", "penis2", "penis3" , "penis4", "penis5"])
 
 
 
