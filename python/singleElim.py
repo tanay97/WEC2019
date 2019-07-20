@@ -19,7 +19,7 @@ def print_first_round(valid_teams, matches):
         print(bye + " gets a bye")
 
 def single_elimination(teams):
-    out_match = {}
+    out_match = []
 
     valid_teams = teams
     match_index = 1
@@ -35,7 +35,7 @@ def single_elimination(teams):
 
         for i in range(int(len(players)/2)):
             matches[match_index] = [ players[i], players[len(players) -i -1]]
-            out_match[match_index] = {"home" :  players[i],  "away" : players[len(players) -i -1], "round": round}
+            out_match.append({"home" :  players[i],  "away" : players[len(players) -i -1], "round": round})
             #print("Match " + str(match_index) + " : " + players[i] + " Vs. " + players[len(players) -i -1])
             match_index = match_index + 1
 
@@ -47,6 +47,19 @@ def single_elimination(teams):
         round  = round +1
     print(out_match)
     return out_match
+
+def get_rankings(matches = {}):
+    rounds = 0
+    matches = 0
+    ranks = []
+    for match in matches.keys():
+        rounds = max(rounds, matches[match]["round"])
+        matches  = max(matches, match)
+
+    ranks.append()
+
+
+
 
 
 
