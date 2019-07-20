@@ -16,7 +16,8 @@ class Generator extends React.Component {
 	render() {
 		return(
 			<div>
-				<FormControl class="form-control" id="name" placeholder="Tournament Name"></FormControl>
+				<p>{this.props.title}</p>
+				<FormControl class="form-control" id="name" placeholder="Tournament Name" onChange={e => this.props.handleTitleChange(e)}></FormControl>
 				<br></br>
 				<select class="form-control" id="type" onChange={e => this.props.handleTypeChange(e)}>
 					<option>Single Elimination</option>

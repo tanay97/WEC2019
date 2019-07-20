@@ -128,7 +128,7 @@ class Bracket extends React.Component {
 							id='awayScore' onChange={e => this.handleScoreChange(e, i)}
 						/>
 					</InputGroup>
-					<Button variant="light" onClick={e => this.updateWinner(e, i)}>Submit Score</Button>
+					<Button variant="light" onClick={e => this.updateWinner(e, i)} disabled={m.winner !== ''}>Submit Score</Button>
 				</div>
 			)
 		}
@@ -145,6 +145,7 @@ class Bracket extends React.Component {
 	render() {
 		return(
 			<div>
+                <h1>{this.props.title}</h1>
 				{this.state.matches.map((m, i) => {
 					let home = '-'
 					let away = '-'
