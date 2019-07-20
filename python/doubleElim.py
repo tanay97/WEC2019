@@ -26,7 +26,9 @@ def double_elimination(teams):
         matches.append(k)
     for k in single_elimination(losers, len(matches) , 2):
         matches.append(k)
-
+    for m in matches:
+        round = max(round, m["round"])
+    matches.append({"home": len(matches) -1, "away":len(matches) -2, "round": round+1, "winner": ""})
     return matches
 
 
