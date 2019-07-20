@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from python.singleElim import *
 from python.roundRobin import *
+from python.doubleElim import *
 
 app = Flask(__name__, static_folder="build/static", template_folder="build")
 
@@ -15,6 +16,12 @@ def main():
 def robin():
     teams = request.args.get('teamList')
     return jsonify(round_robin(teams.split(',')))
+
+
+@app.route('/getDoubleElimMatches')
+def robin():
+    teams = request.args.get('teamList')
+    return jsonify(double_elimination(teams.split(',')))
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5000)
