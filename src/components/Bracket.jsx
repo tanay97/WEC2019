@@ -1,100 +1,59 @@
 import React from 'react'
 import '../styles/Bracket.css'
 
+import { button } from 'react-bootstrap';
+import { assignmentExpression } from '@babel/types';
 import { InputGroup, FormControl, Button } from 'react-bootstrap'
 
 class Bracket extends React.Component {
-
-	state = {
-		matches: [
-			{
-				round: 1,
-				winner: '',
-				home: 'A',
-				away: 'B',
-				homeScore: '',
-				awayScore: '',
-			},
-			{
-				round: 1,
-				winner: '',
-				home: 'C',
-				away: 'D',
-				homeScore: '',
-				awayScore: '',
-			},
-			{
-				round: 1,
-				winner: '',
-				home: 'E',
-				away: 'F',
-				homeScore: '',
-				awayScore: '',
-			},
-			{
-				round: 1,
-				winner: '',
-				home: 'G',
-				away: 'H',
-				homeScore: '',
-				awayScore: '',
-			},
-			{
-				round: 2,
-				winner: '',
-				home: 0,
-				away: 1,
-				homeScore: '',
-				awayScore: '',
-			},
-			{
-				round: 2,
-				winner: '',
-				home: 2,
-				away: 3,
-				homeScore: '',
-				awayScore: '',
-			},
-			{
-				round: 3,
-				winner: '',
-				home: 4,
-				away: 5,
-				homeScore: '',
-				awayScore: '',
-			}
-		]
+	constructor(props) {
+		super(props);
+		this.state = {
+			matches: []
+		}
 	}
+
+	componentDidMount() {
+		fetch("http://127.0.0.1:5000/getMatches")
+			.then(response => response.json())
+			.then((data) => {
+				console.log(data);
+				this.setState({ matches : data });
+			})
+	  }
 
 	updateWinner(e, i) {
 		// Update match winner
 		const winner = e.target.value
-    let matchWin = this.state.matches[i];
-    matchWin.winner = winner
-    const updatedMatches = [
-      ...this.state.matches.slice(0, i),
-      matchWin,
-      ...this.state.matches.slice(i+1)
+    	let matchWin = this.state.matches[i];
+    	matchWin.winner = winner
+		const updatedMatches = [
+			...this.state.matches.slice(0, i),
+			matchWin,
+			...this.state.matches.slice(i+1)
 		];
+			
 		this.setState({ matches: updatedMatches })
-		
+			
 		// Update bracket
 		const j = this.state.matches.findIndex(m => m.home === i || m.away === i)
 		if (j === -1) {
 			return
 		}
+
 		let matchBracket = this.state.matches[j]
 		if (matchBracket.home === i) {
 			matchBracket.home = matchWin.winner
 		} else {
 			matchBracket.away = matchWin.winner
 		}
+		
 		const updatedMatchesBracket = [
-      ...this.state.matches.slice(0, j),
-      matchBracket,
-      ...this.state.matches.slice(j+1)
+			...this.state.matches.slice(0, j),
+			matchBracket,
+			...this.state.matches.slice(j+1)
 		];
-    this.setState({ matches: updatedMatchesBracket })
+		this.setState({ matches: updatedMatchesBracket })
 	}
 
 	handleChange(e) {
